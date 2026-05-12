@@ -40,5 +40,5 @@ urlpatterns = [
     ),
 
     # Auth routes
-    path('api/auth/', include('apps.authentication.urls')),
+    path('api/auth/', include('apps.autenticacion.urls')),
 ]

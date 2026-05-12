@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Local apps
-    'apps.authentication',
-    'apps.appointments',
-    'apps.reports',
+    'apps.autenticacion',
+    'apps.citas',
+    'apps.reportes',
 ]
 
 MIDDLEWARE = [
