@@ -41,4 +41,6 @@ urlpatterns = [
 
     # Auth routes
     path('api/auth/', include('apps.autenticacion.urls')),
+
+    path('api/', include('apps.citas.urls')),
 ]
