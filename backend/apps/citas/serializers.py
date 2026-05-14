@@ -39,6 +39,13 @@ class CitaSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, attrs):
+
+        self.validar_fecha_entrega(attrs)
+        self.validar_conflicto_horario(attrs)
+
+        return attrs
+
+    def validar_fecha_entrega(self, attrs):
         estado = attrs.get('estado')
         fecha_entrega = attrs.get('fecha_entrega')
 
@@ -55,3 +62,22 @@ class CitaSerializer(serializers.ModelSerializer):
             )
 
         return attrs
+
+    def validar_conflicto_horario(self, attrs):
+        proveedor = attrs.get('proveedor')
+        fecha_programada = attrs.get('fecha_programada')
+
+        existe_cita = Cita.objects.filter(
+            proveedor=proveedor,
+            fecha_programada=fecha_programada
+        ).exists()
+
+        if existe_cita:
+            raise serializers.ValidationError(
+                {
+                    'fecha_programada': (
+                        'Ya existe una cita para este proveedor '
+                        'en esa fecha.'
+                    )
+                }
+            )
