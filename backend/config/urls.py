@@ -22,10 +22,15 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-        # API Schema
+    # API Schema
     path(
         'api/schema/',
         SpectacularAPIView.as_view(),
@@ -42,5 +47,10 @@ urlpatterns = [
     # Auth routes
     path('api/auth/', include('apps.autenticacion.urls')),
 
+    # Citas routes
     path('api/', include('apps.citas.urls')),
+
+    # JWT Auth routes
+    path("api/token/", TokenObtainPairView.as_view()),
+    path("api/token/refresh/", TokenRefreshView.as_view()),
 ]
