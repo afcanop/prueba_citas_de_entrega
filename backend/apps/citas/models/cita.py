@@ -4,10 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from .choices import EstadoCita, LineaProductoChoices, ProveedorChoices
-from .validators import (
-    validate_fecha_entrega_requerida,
-    validate_fecha_programada,
-)
+from .validators import validate_fecha_entrega_requerida, validate_fecha_programada
 
 
 class Cita(models.Model):
