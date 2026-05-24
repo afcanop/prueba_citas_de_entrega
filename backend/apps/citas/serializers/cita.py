@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Cita
+from ..models import Cita
 from .validators import (
     validate_fecha_programada,
     validar_conflicto_horario,
