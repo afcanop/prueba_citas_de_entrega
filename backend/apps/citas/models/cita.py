@@ -3,9 +3,9 @@ import uuid
 from django.contrib.auth.models import User
 from django.db import models
 
-from .choices import EstadoCita, LineaProductoChoices, ProveedorChoices
+from .choices import EstadoCita, LineaProductoChoices
 from .validators import validate_fecha_entrega_requerida, validate_fecha_programada
-
+from apps.terceros.models import Tercero
 
 class Cita(models.Model):
     id = models.UUIDField(
@@ -14,9 +14,10 @@ class Cita(models.Model):
         editable=False
     )
     fecha_programada = models.DateTimeField()
-    proveedor = models.CharField(
-        max_length=1,
-        choices=ProveedorChoices.choices
+    proveedor = models.ForeignKey(
+        Tercero,
+        on_delete=models.PROTECT,
+        related_name='citas'
     )
     linea_producto = models.CharField(
         max_length=20,

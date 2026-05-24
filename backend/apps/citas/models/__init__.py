@@ -1,8 +1,7 @@
-from .choices import ProveedorChoices, LineaProductoChoices, EstadoCita
+from .choices import LineaProductoChoices, EstadoCita
 from .cita import Cita
 
 __all__ = [
-    'ProveedorChoices',
     'LineaProductoChoices',
     'EstadoCita',
     'Cita',

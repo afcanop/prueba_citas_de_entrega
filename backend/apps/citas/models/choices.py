@@ -1,12 +1,4 @@
 from django.db import models
-
-
-class ProveedorChoices(models.TextChoices):
-    A = 'A', 'Proveedor A'
-    B = 'B', 'Proveedor B'
-    C = 'C', 'Proveedor C'
-
-
 class LineaProductoChoices(models.TextChoices):
     CAMISETAS = 'camisetas', 'Camisetas'
     PANTALONES = 'pantalones', 'Pantalones'
