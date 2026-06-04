@@ -24,6 +24,7 @@ class CitaViewSet(viewsets.ModelViewSet):
         'estado',
         'proveedor',
         'linea_producto',
+        'linea_producto__slug',
     ]
 
     ordering_fields = [
@@ -32,8 +33,8 @@ class CitaViewSet(viewsets.ModelViewSet):
     ]
 
     search_fields = [
-        'proveedor',
-        'linea_producto',
+        'proveedor__nombre',
+        'linea_producto__nombre',
         'observaciones',
     ]
 

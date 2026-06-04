@@ -3,7 +3,8 @@ import uuid
 from django.contrib.auth.models import User
 from django.db import models
 
-from .choices import EstadoCita, LineaProductoChoices
+from .choices import EstadoCita
+from .linea_producto import LineaProducto
 from .validators import validate_fecha_entrega_requerida, validate_fecha_programada
 from apps.terceros.models import Tercero
 
@@ -19,9 +20,10 @@ class Cita(models.Model):
         on_delete=models.PROTECT,
         related_name='citas'
     )
-    linea_producto = models.CharField(
-        max_length=20,
-        choices=LineaProductoChoices.choices
+    linea_producto = models.ForeignKey(
+        LineaProducto,
+        on_delete=models.PROTECT,
+        related_name='citas'
     )
     estado = models.CharField(
         max_length=20,
@@ -58,12 +60,12 @@ class Cita(models.Model):
             f'{self.estado}'
         )
 
-    class Meta:
-        ordering = ['-fecha_programada']
-        db_table = 'citas'
-        indexes = [
-            models.Index(fields=['estado']),
-            models.Index(fields=['proveedor']),
-            models.Index(fields=['linea_producto']),
-            models.Index(fields=['fecha_programada']),
-        ]
+        class Meta:
+            ordering = ['-fecha_programada']
+            db_table = 'citas'
+            indexes = [
+                models.Index(fields=['estado']),
+                models.Index(fields=['proveedor']),
+                models.Index(fields=['linea_producto']),
+                models.Index(fields=['fecha_programada']),
+            ]

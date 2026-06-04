@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Cita
+from ..models import Cita, LineaProducto
 from .validators import (
     validate_fecha_programada,
     validar_conflicto_horario,
@@ -9,6 +9,10 @@ from .validators import (
 
 
 class CitaSerializer(serializers.ModelSerializer):
+    linea_producto = serializers.SlugRelatedField(
+        queryset=LineaProducto.objects.all(),
+        slug_field='slug'
+    )
 
     class Meta:
         model = Cita
