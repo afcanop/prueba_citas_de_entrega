@@ -23,7 +23,8 @@ class Cita(models.Model):
     linea_producto = models.ForeignKey(
         LineaProducto,
         on_delete=models.PROTECT,
-        related_name='citas'
+        related_name='citas',
+        null=True,
     )
     estado = models.CharField(
         max_length=20,
@@ -60,12 +61,12 @@ class Cita(models.Model):
             f'{self.estado}'
         )
 
-        class Meta:
-            ordering = ['-fecha_programada']
-            db_table = 'citas'
-            indexes = [
-                models.Index(fields=['estado']),
-                models.Index(fields=['proveedor']),
-                models.Index(fields=['linea_producto']),
-                models.Index(fields=['fecha_programada']),
-            ]
+    class Meta:
+        ordering = ['-fecha_programada']
+        db_table = 'citas'
+        indexes = [
+            models.Index(fields=['estado']),
+            models.Index(fields=['proveedor']),
+            models.Index(fields=['linea_producto']),
+            models.Index(fields=['fecha_programada']),
+        ]

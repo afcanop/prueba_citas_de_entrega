@@ -1,10 +1,7 @@
-from datetime import timezone
-
-from django.db import models
-
-# Create your models here.
-from django.db import models
 import uuid
+
+from django.db import models
+from django_tenants.models import DomainMixin, TenantMixin
 
 
 class TipoDocumentoChoices(models.TextChoices):
@@ -17,7 +14,8 @@ class TipoPersonaChoices(models.TextChoices):
     NATURAL = 'N', 'Natural'
     JURIDICA = 'J', 'Jurídica'
 
-class Tercero(models.Model):
+class Tercero(TenantMixin):
+    schema_name = models.CharField(max_length=63, unique=True)
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -45,27 +43,25 @@ class Tercero(models.Model):
     activo = models.BooleanField(default=True)
     creado_en = models.DateTimeField(auto_now_add=True)
     actualizado_en = models.DateTimeField(auto_now=True)
+
+    auto_create_schema = True
+
     def __str__(self):
         return self.nombre
 
     class Meta:
         db_table = 'terceros'
-
         ordering = ['nombre']
-
         indexes = [
-
-            # búsquedas por nombre
             models.Index(fields=['nombre']),
-
-            # filtros por estado
             models.Index(fields=['activo']),
-
-            # cliente/proveedor
             models.Index(fields=['cliente']),
             models.Index(fields=['proveedor']),
-
-            # consultas combinadas
             models.Index(fields=['activo', 'cliente']),
             models.Index(fields=['activo', 'proveedor']),
         ]
+
+
+class Dominio(DomainMixin):
+    def __str__(self):
+        return self.domain
