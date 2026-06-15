@@ -50,17 +50,12 @@ SHARED_APPS = [
 
     # Local apps (shared)
     'apps.terceros',
+
+    'apps.autenticacion',
 ]
 
 TENANT_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-
     # Local apps (per tenant)
-    'apps.autenticacion',
     'apps.citas',
     'apps.reportes',
 ]

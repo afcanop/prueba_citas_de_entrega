@@ -43,3 +43,8 @@ ejecute las migraciones
 
 para correr el servidor local ejecute el comando
  `python manage.py runserver`
+
+### Documentación API
+
+- Swagger UI: `http://localhost:8000/api/docs/`
+- Redoc UI: `http://localhost:8000/api/redoc/`
