@@ -1,51 +1,52 @@
+"use client";
+
+import {
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Box,
+} from "@mui/material";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
+
+const stats = [
+  { label: "Programadas", value: 0, icon: <EventNoteIcon />, color: "#1976d2" },
+  { label: "En proceso", value: 0, icon: <PlayCircleIcon />, color: "#f57c00" },
+  { label: "Entregadas", value: 0, icon: <CheckCircleIcon />, color: "#388e3c" },
+  { label: "Canceladas", value: 0, icon: <CancelIcon />, color: "#d32f2f" },
+];
+
 export default function DashboardPage() {
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">
+    <Box>
+      <Typography variant="h4" sx={{ fontWeight: 700 }} gutterBottom>
         Dashboard
-      </h1>
+      </Typography>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-6 border">
-          <p className="text-gray-500">
-            Programadas
-          </p>
-
-          <h2 className="text-3xl font-bold">
-            0
-          </h2>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border">
-          <p className="text-gray-500">
-            En proceso
-          </p>
-
-          <h2 className="text-3xl font-bold">
-            0
-          </h2>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border">
-          <p className="text-gray-500">
-            Entregadas
-          </p>
-
-          <h2 className="text-3xl font-bold">
-            0
-          </h2>
-        </div>
-
-        <div className="bg-white rounded-xl p-6 border">
-          <p className="text-gray-500">
-            Canceladas
-          </p>
-
-          <h2 className="text-3xl font-bold">
-            0
-          </h2>
-        </div>
-      </div>
-    </div>
+      <Grid container spacing={3}>
+        {stats.map((stat) => (
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={stat.label}>
+            <Card elevation={2}>
+              <CardContent sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box sx={{ color: stat.color, fontSize: 40 }}>
+                  {stat.icon}
+                </Box>
+                <Box>
+                  <Typography variant="body2" color="text.secondary">
+                    {stat.label}
+                  </Typography>
+                  <Typography variant="h4" sx={{ fontWeight: 700 }}>
+                    {stat.value}
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }

@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+} from "@mui/material";
 import { api } from "@/services/api";
-import { setItemLocalStorage  } from "@/services/localStorage.service";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -10,12 +17,12 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post("/token/", {
-        username,
-        password,
-      });
+      // const response = await api.post("/token/", {
+      //   username,
+      //   password,
+      // });
 
-      document.cookie = `access=${response.data.access}; path=/`;
+      document.cookie = `access=123; path=/`;
 
       window.location.href = "/dashboard";
     } catch (error) {
@@ -25,32 +32,33 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-sm space-y-4 border rounded-xl p-6">
-        <h1 className="text-2xl font-bold">Login</h1>
+    <Container maxWidth="xs" sx={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
+      <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, textAlign: "center" }} gutterBottom>
+          Iniciar Sesión
+        </Typography>
 
-        <input
-          className="w-full border p-2 rounded"
-          placeholder="Usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <input
-          className="w-full border p-2 rounded"
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button
-          onClick={handleLogin}
-          className="w-full bg-black text-white p-2 rounded"
-        >
-          Ingresar
-        </button>
-      </div>
-    </div>
+        <Box component="form" sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 2 }}>
+          <TextField
+            label="Usuario"
+            variant="outlined"
+            fullWidth
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <TextField
+            label="Contraseña"
+            type="password"
+            variant="outlined"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button variant="contained" size="large" fullWidth onClick={handleLogin}>
+            Ingresar
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
