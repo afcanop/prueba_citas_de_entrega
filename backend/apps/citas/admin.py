@@ -1,21 +1,6 @@
 from django.contrib import admin
 
-from .models import Cita, LineaProducto
-
-
-@admin.register(LineaProducto)
-class LineaProductoAdmin(admin.ModelAdmin):
-    list_display = (
-        'nombre',
-        'slug',
-    )
-    search_fields = (
-        'nombre',
-        'slug',
-    )
-    prepopulated_fields = {
-        'slug': ('nombre',),
-    }
+from .models import Cita
 
 
 @admin.register(Cita)

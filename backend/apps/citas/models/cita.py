@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from .choices import EstadoCita
-from .linea_producto import LineaProducto
+ 
 from .validators import validate_fecha_entrega_requerida, validate_fecha_programada
 from apps.terceros.models import Tercero
 
@@ -21,7 +21,7 @@ class Cita(models.Model):
         related_name='citas'
     )
     linea_producto = models.ForeignKey(
-        LineaProducto,
+        'linea_producto.LineaProducto',
         on_delete=models.PROTECT,
         related_name='citas',
         null=True,

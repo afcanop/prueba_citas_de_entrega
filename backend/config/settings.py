@@ -49,21 +49,24 @@ SHARED_APPS = [
     'corsheaders',
 
     # Local apps (shared)
-    'apps.terceros',
-
+    'apps.empresa',
     'apps.autenticacion',
 ]
 
 TENANT_APPS = [
     # Local apps (per tenant)
+    'apps.terceros',
     'apps.citas',
     'apps.reportes',
+    'apps.tipo_servicio',
+    'apps.linea_producto',
+    'apps.programacion_horaria',
 ]
 
 INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-TENANT_MODEL = "terceros.Tercero"
-TENANT_DOMAIN_MODEL = "terceros.Dominio"
+TENANT_MODEL = "empresa.Empresa"
+TENANT_DOMAIN_MODEL = "empresa.Dominio"
 
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',

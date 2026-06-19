@@ -1,7 +1,6 @@
 import uuid
 
 from django.db import models
-from django_tenants.models import DomainMixin, TenantMixin
 
 
 class TipoDocumentoChoices(models.TextChoices):
@@ -14,22 +13,23 @@ class TipoPersonaChoices(models.TextChoices):
     NATURAL = 'N', 'Natural'
     JURIDICA = 'J', 'Jurídica'
 
-class Tercero(TenantMixin):
-    schema_name = models.CharField(max_length=63, unique=True)
+class Tercero(models.Model):
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False
+    )
+    empresa = models.ForeignKey(
+        'empresa.Empresa',
+        on_delete=models.CASCADE,
+        related_name='terceros'
     )
     nombre = models.CharField(max_length=255)
     direccion = models.CharField(max_length=255, blank=True, null=True)
     telefono = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     proveedor = models.BooleanField(default=False)
-    numero_documento = models.CharField(
-        max_length=50,
-        unique=True
-    )
+    numero_documento = models.CharField(max_length=50)
     tipo_documento = models.CharField(
         max_length=10,
         choices=TipoDocumentoChoices.choices
@@ -44,24 +44,24 @@ class Tercero(TenantMixin):
     creado_en = models.DateTimeField(auto_now_add=True)
     actualizado_en = models.DateTimeField(auto_now=True)
 
-    auto_create_schema = True
-
     def __str__(self):
         return self.nombre
 
     class Meta:
         db_table = 'terceros'
         ordering = ['nombre']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['empresa', 'numero_documento'],
+                name='unique_tercero_por_empresa'
+            ),
+        ]
         indexes = [
             models.Index(fields=['nombre']),
             models.Index(fields=['activo']),
             models.Index(fields=['cliente']),
             models.Index(fields=['proveedor']),
+            models.Index(fields=['empresa']),
             models.Index(fields=['activo', 'cliente']),
             models.Index(fields=['activo', 'proveedor']),
         ]
-
-
-class Dominio(DomainMixin):
-    def __str__(self):
-        return self.domain

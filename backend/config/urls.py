@@ -55,8 +55,15 @@ urlpatterns = [
     # Auth routes
     path('api/auth/', include('apps.autenticacion.urls')),
 
+    # Empresa CRUD routes
+    path('api/', include('apps.empresa.urls')),
+
     # Citas routes
     path('api/', include('apps.citas.urls')),
+    # Tipo de servicio routes
+    path('api/', include('apps.tipo_servicio.urls')),
+    # Línea de producto routes
+    path('api/', include('apps.linea_producto.urls')),
 
     # JWT Auth routes
     path("api/token/", TokenObtainPairView.as_view()),
